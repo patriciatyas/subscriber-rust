@@ -13,3 +13,11 @@ String koneksi "amqp://guest:guest@localhost:5672" adalah URL untuk menghubungka
 ![alt text](image.png)
 
 Berdasarkan dashboard RabbitMQ pada gambar, terlihat masalah slow subscriber yang signifikan dengan penumpukan 56 pesan dalam antrian. Statistik global menunjukkan sistem memiliki 1 koneksi, 1 channel, 10 exchange, 2 queue, dan hanya 1 consumer yang aktif, menunjukkan bahwa bottleneck terjadi karena kapasitas pemrosesan consumer yang tidak memadai dibandingkan dengan volume pesan yang masuk, yang dapat disebabkan oleh pemrosesan yang lambat pada consumer atau jumlah consumer yang tidak mencukupi untuk menangani beban kerja.
+
+### Running at least three subscribers
+
+![alt text](image-1.png)
+
+![alt text](image-2.png)
+
+Pada gambar dapat dilihat bahwa queue dikonsumsi dengan kecepatan yang jauh lebih tinggi karena jumlah consumer ditingkatkan dari 1 menjadi 3 sehingga meskipun setiap consumer memiliki delay 1 detik, secara keseluruhan sistem dapat memproses 3 pesan per detik yang cukup untuk menangani laju pesan dari publisher yang hanya mengirim 5 pesan sekali jalan dan jumlah pesan dalam antrian berkurang secara signifikan.
